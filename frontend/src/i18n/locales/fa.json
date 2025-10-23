@@ -1,0 +1,89 @@
+{
+  "nav": {
+    "home": "صفحه اصلی",
+    "posts": "مقالات",
+    "about": "درباره ما",
+    "contact": "تماس با ما",
+    "login": "ورود",
+    "register": "ثبت‌نام",
+    "logout": "خروج",
+    "dashboard": "داشبورد",
+    "profile": "پروفایل",
+    "language": "زبان"
+  },
+  "auth": {
+    "loginTitle": "ورود به حساب کاربری",
+    "registerTitle": "ایجاد حساب کاربری",
+    "name": "نام",
+    "email": "ایمیل",
+    "password": "رمز عبور",
+    "confirmPassword": "تأیید رمز عبور",
+    "alreadyHaveAccount": "قبلاً حساب کاربری دارید؟",
+    "dontHaveAccount": "حساب کاربری ندارید؟",
+    "loginSuccess": "ورود موفقیت‌آمیز بود",
+    "registerSuccess": "ثبت‌نام موفقیت‌آمیز بود",
+    "loginError": "اطلاعات ورود نامعتبر است",
+    "registerError": "ثبت‌نام ناموفق بود"
+  },
+  "post": {
+    "title": "عنوان",
+    "content": "محتوا",
+    "excerpt": "خلاصه",
+    "category": "دسته‌بندی",
+    "tags": "برچسب‌ها",
+    "author": "نویسنده",
+    "createdAt": "تاریخ ایجاد",
+    "likes": "لایک‌ها",
+    "comments": "نظرات",
+    "readMore": "ادامه مطلب",
+    "editPost": "ویرایش مقاله",
+    "deletePost": "حذف مقاله",
+    "createPost": "ایجاد مقاله",
+    "updatePost": "به‌روزرسانی مقاله",
+    "postCreated": "مقاله با موفقیت ایجاد شد",
+    "postUpdated": "مقاله با موفقیت به‌روزرسانی شد",
+    "postDeleted": "مقاله با موفقیت حذف شد",
+    "noPostsFound": "مقاله‌ای یافت نشد",
+    "searchPosts": "جستجوی مقالات..."
+  },
+  "comment": {
+    "addComment": "افزودن نظر",
+    "commentContent": "محتوای نظر",
+    "commentAdded": "نظر با موفقیت افزوده شد",
+    "commentUpdated": "نظر با موفقیت به‌روزرسانی شد",
+    "commentDeleted": "نظر با موفقیت حذف شد",
+    "noComments": "هنوز نظری ثبت نشده. اولین نفر باشید!"
+  },
+  "profile": {
+    "myPosts": "مقالات من",
+    "myProfile": "پروفایل من",
+    "editProfile": "ویرایش پروفایل",
+    "profileUpdated": "پروفایل با موفقیت به‌روزرسانی شد"
+  },
+  "admin": {
+    "dashboard": "داشبورد مدیر",
+    "manageUsers": "مدیریت کاربران",
+    "managePosts": "مدیریت مقالات",
+    "totalUsers": "تعداد کل کاربران",
+    "totalPosts": "تعداد کل مقالات",
+    "userCreated": "کاربر با موفقیت ایجاد شد",
+    "userUpdated": "کاربر با موفقیت به‌روزرسانی شد",
+    "userDeleted": "کاربر با موفقیت حذف شد"
+  },
+  "common": {
+    "save": "ذخیره",
+    "cancel": "انصراف",
+    "edit": "ویرایش",
+    "delete": "حذف",
+    "create": "ایجاد",
+    "update": "به‌روزرسانی",
+    "search": "جستجو",
+    "filter": "فیلتر",
+    "loading": "در حال بارگذاری...",
+    "error": "خطا",
+    "success": "موفقیت",
+    "confirm": "آیا مطمئن هستید؟",
+    "yes": "بله",
+    "no": "خیر"
+  }
+}
