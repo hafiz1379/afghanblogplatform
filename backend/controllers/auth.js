@@ -9,6 +9,22 @@ exports.register = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
 
+    // Validate input
+    if (!name || !email || !password) {
+      return next(
+        new ErrorResponse("Please provide name, email and password", 400)
+      );
+    }
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      return next(
+        new ErrorResponse("User with this email already exists", 400)
+      );
+    }
+
     // Create user
     const user = await User.create({
       name,
@@ -60,11 +76,7 @@ exports.login = async (req, res, next) => {
 // @route   GET /api/auth/logout
 // @access  Public
 exports.logout = async (req, res, next) => {
-  res.cookie("token", "none", {
-    expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true,
-  });
-
+  // Since we're not using cookies, just return success
   res.status(200).json({
     success: true,
     data: {},
