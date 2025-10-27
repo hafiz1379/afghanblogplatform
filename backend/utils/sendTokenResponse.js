@@ -1,5 +1,3 @@
-const jwt = require("jsonwebtoken");
-
 const sendTokenResponse = (user, statusCode, res) => {
   // Create token
   const token = user.getSignedJwtToken();
@@ -15,7 +13,8 @@ const sendTokenResponse = (user, statusCode, res) => {
     options.secure = true;
   }
 
-  res.status(statusCode).cookie("token", token, options).json({
+  // Instead of setting a cookie, return the token in the response
+  res.status(statusCode).json({
     success: true,
     token,
   });
