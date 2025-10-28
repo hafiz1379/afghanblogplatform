@@ -1,14 +1,8 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
 
 const Footer = () => {
-  const { t, i18n } = useTranslation();
-  const isRTL = i18n.language === "fa";
-
   return (
-    <footer
-      className={`bg-gray-800 text-white py-8 ${isRTL ? "font-farsi" : ""}`}
-    >
+    <footer className="bg-gray-800 text-white py-8">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
@@ -19,16 +13,16 @@ const Footer = () => {
             </p>
           </div>
           <div>
-            <h3 className="text-xl font-bold mb-4">{t("nav.about")}</h3>
+            <h3 className="text-xl font-bold mb-4">About</h3>
             <ul className="space-y-2">
               <li>
                 <a href="#" className="text-gray-400 hover:text-white">
-                  {t("nav.about")}
+                  About
                 </a>
               </li>
               <li>
                 <a href="#" className="text-gray-400 hover:text-white">
-                  {t("nav.contact")}
+                  Contact
                 </a>
               </li>
               <li>

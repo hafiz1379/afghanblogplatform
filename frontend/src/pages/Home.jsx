@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { usePost } from "../context/PostContext";
 import PostCard from "../components/PostCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 
 const Home = () => {
-  const { t, i18n } = useTranslation();
   const { posts, loading, getPosts, filters, setFilters } = usePost();
   const [searchTerm, setSearchTerm] = useState("");
-  const isRTL = i18n.language === "fa";
 
+  // Load posts initially and whenever filters change
   useEffect(() => {
-    getPosts(1, 6);
-  }, []);
+    getPosts(1, 6, filters);
+  }, [getPosts, filters]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -21,13 +19,13 @@ const Home = () => {
   };
 
   return (
-    <div className={`min-h-screen ${isRTL ? "font-farsi" : ""}`}>
+    <div className="min-h-screen">
       {/* Hero Section */}
       <section className="bg-blue-600 text-white py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              {t("nav.home")} - Afghan Blog Platform
+              Afghan Blog Platform
             </h1>
             <p className="text-xl mb-8">
               Discover stories, ideas, and knowledge from writers around the
@@ -37,18 +35,17 @@ const Home = () => {
               <div className="flex">
                 <input
                   type="text"
-                  placeholder={t("post.searchPosts")}
-                  className={`flex-grow px-4 py-2 rounded-l-md text-gray-800 ${
-                    isRTL ? "rounded-r-md rounded-l-none" : ""
-                  }`}
+                  name="search"
+                  placeholder="Search posts..."
+                  className="flex-grow px-4 py-2 rounded-l-md text-gray-800"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <button
                   type="submit"
-                  className="bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-r-md"
+                  className="bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-r-md text-white"
                 >
-                  {t("common.search")}
+                  Search
                 </button>
               </div>
             </form>
@@ -72,7 +69,7 @@ const Home = () => {
             </div>
           ) : (
             <div className="text-center py-12">
-              <p className="text-xl text-gray-600">{t("post.noPostsFound")}</p>
+              <p className="text-xl text-gray-600">No posts found.</p>
             </div>
           )}
           <div className="text-center mt-12">

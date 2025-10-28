@@ -1,19 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
-import LanguageSelector from "./LanguageSelector";
 
 const Header = () => {
-  const { t, i18n } = useTranslation();
   const { isAuthenticated, user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const profileMenuRef = useRef(null);
-
-  const isRTL = i18n.language === "fa";
 
   const handleLogout = () => {
     logout();
@@ -44,14 +39,12 @@ const Header = () => {
   }, [location.pathname]);
 
   const navLinks = [
-    { path: "/", label: t("nav.home") },
-    { path: "/posts", label: t("nav.posts") },
+    { path: "/", label: "Home" },
+    { path: "/posts", label: "Posts" },
   ];
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 ${isRTL ? "font-farsi" : ""}`}
-    >
+    <header className="fixed top-0 left-0 right-0 z-50">
       {/* Glassmorphism Background */}
       <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
         <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -78,7 +71,6 @@ const Header = () => {
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 dark:bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
                 </Link>
               ))}
-              <LanguageSelector />
 
               {isAuthenticated ? (
                 <>
@@ -86,7 +78,7 @@ const Header = () => {
                     to="/dashboard"
                     className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
                   >
-                    {t("nav.dashboard")}
+                    Dashboard
                   </Link>
                   {/* Profile Dropdown */}
                   <div className="relative" ref={profileMenuRef}>
@@ -102,8 +94,8 @@ const Header = () => {
                       <span className="hidden lg:block">{user?.name}</span>
                       <svg
                         className={`h-4 w-4 transform transition-transform duration-300 ${
-                          isRTL ? "rotate-180" : ""
-                        } ${isProfileMenuOpen ? "rotate-180" : ""}`}
+                          isProfileMenuOpen ? "rotate-180" : ""
+                        }`}
                         fill="currentColor"
                         viewBox="0 0 20 20"
                       >
@@ -114,7 +106,6 @@ const Header = () => {
                         />
                       </svg>
                     </button>
-                    {/* Dropdown Menu - بخش اصلاح شده */}
                     <div
                       className={`absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl py-2 transform origin-top-right transition-all duration-300 ${
                         isProfileMenuOpen
@@ -127,13 +118,13 @@ const Header = () => {
                         className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
                         onClick={() => setIsProfileMenuOpen(false)}
                       >
-                        {t("nav.profile")}
+                        Profile
                       </Link>
                       <button
                         onClick={handleLogout}
                         className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
                       >
-                        {t("nav.logout")}
+                        Logout
                       </button>
                     </div>
                   </div>
@@ -144,13 +135,13 @@ const Header = () => {
                     to="/login"
                     className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
                   >
-                    {t("nav.login")}
+                    Login
                   </Link>
                   <Link
                     to="/register"
                     className="bg-gradient-to-r from-blue-500 to-teal-400 hover:from-blue-600 hover:to-teal-500 text-white px-4 py-2 rounded-md transition-all duration-300 transform hover:scale-105 shadow-md"
                   >
-                    {t("nav.register")}
+                    Register
                   </Link>
                 </div>
               )}
@@ -207,28 +198,25 @@ const Header = () => {
                 {link.label}
               </Link>
             ))}
-            <div className="px-3 py-2">
-              <LanguageSelector />
-            </div>
             {isAuthenticated ? (
               <>
                 <Link
                   to="/dashboard"
                   className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
-                  {t("nav.dashboard")}
+                  Dashboard
                 </Link>
                 <Link
                   to="/profile"
                   className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
-                  {t("nav.profile")}
+                  Profile
                 </Link>
                 <button
                   onClick={handleLogout}
                   className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
-                  {t("nav.logout")}
+                  Logout
                 </button>
               </>
             ) : (
@@ -237,13 +225,13 @@ const Header = () => {
                   to="/login"
                   className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
-                  {t("nav.login")}
+                  Login
                 </Link>
                 <Link
                   to="/register"
                   className="block w-full text-center mt-2 bg-gradient-to-r from-blue-500 to-teal-400 hover:from-blue-600 hover:to-teal-500 text-white px-4 py-2 rounded-md transition-all duration-300"
                 >
-                  {t("nav.register")}
+                  Register
                 </Link>
               </>
             )}
