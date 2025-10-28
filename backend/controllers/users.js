@@ -6,7 +6,13 @@ const ErrorResponse = require("../utils/errorResponse");
 // @access  Private/Admin
 exports.getUsers = async (req, res, next) => {
   try {
-    res.status(200).json(res.advancedResults);
+    const users = await User.find({}).select("-password");
+
+    res.status(200).json({
+      success: true,
+      count: users.length,
+      data: users,
+    });
   } catch (error) {
     next(error);
   }
@@ -88,7 +94,7 @@ exports.deleteUser = async (req, res, next) => {
       );
     }
 
-    user.remove();
+    await user.deleteOne();
 
     res.status(200).json({
       success: true,
