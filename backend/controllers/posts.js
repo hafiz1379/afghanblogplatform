@@ -11,13 +11,22 @@ exports.getPosts = async (req, res, next) => {
     // Copy req.query
     const reqQuery = { ...req.query };
 
-    // Fields to exclude
-    const removeFields = ["select", "sort", "page", "limit"];
+    let searchQuery = {};
+    if (reqQuery.search) {
+      searchQuery = {
+        $or: [
+          { title: { $regex: reqQuery.search, $options: "i" } }, 
+          { content: { $regex: reqQuery.search, $options: "i" } },
+      };
+    }
+
+    // Fields to exclude from the main filter
+    const removeFields = ["select", "sort", "page", "limit", "search"]; 
 
     // Loop over removeFields and delete them from reqQuery
     removeFields.forEach((param) => delete reqQuery[param]);
 
-    // Create query string
+    // Create query string for other filters
     let queryStr = JSON.stringify(reqQuery);
 
     // Create operators ($gt, $gte, etc)
@@ -26,8 +35,13 @@ exports.getPosts = async (req, res, next) => {
       (match) => `$${match}`
     );
 
-    // Finding resource
-    query = Post.find(JSON.parse(queryStr)).populate({
+    const finalQuery = {
+      ...JSON.parse(queryStr),
+      ...searchQuery,
+    };
+
+    // Finding resource with the combined query
+    query = Post.find(finalQuery).populate({
       path: "author",
       select: "name",
     });
@@ -51,7 +65,9 @@ exports.getPosts = async (req, res, next) => {
     const limit = parseInt(req.query.limit, 10) || 10;
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
-    const total = await Post.countDocuments();
+
+    // Total documents count
+    const total = await Post.countDocuments(finalQuery);
 
     query = query.skip(startIndex).limit(limit);
 
@@ -193,12 +209,12 @@ exports.deletePost = async (req, res, next) => {
       return next(
         new ErrorResponse(
           `User ${req.user.id} is not authorized to delete this post`,
-          401
+          401 // or 403 Forbidden
         )
       );
     }
 
-    post.remove();
+    await post.deleteOne();
 
     res.status(200).json({
       success: true,
