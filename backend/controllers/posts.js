@@ -15,13 +15,14 @@ exports.getPosts = async (req, res, next) => {
     if (reqQuery.search) {
       searchQuery = {
         $or: [
-          { title: { $regex: reqQuery.search, $options: "i" } }, 
+          { title: { $regex: reqQuery.search, $options: "i" } },
           { content: { $regex: reqQuery.search, $options: "i" } },
+        ],
       };
     }
 
     // Fields to exclude from the main filter
-    const removeFields = ["select", "sort", "page", "limit", "search"]; 
+    const removeFields = ["select", "sort", "page", "limit", "search"];
 
     // Loop over removeFields and delete them from reqQuery
     removeFields.forEach((param) => delete reqQuery[param]);
@@ -230,7 +231,10 @@ exports.deletePost = async (req, res, next) => {
 // @access  Private
 exports.likePost = async (req, res, next) => {
   try {
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findById(req.params.id).populate({
+      path: "author",
+      select: "name avatar role",
+    });
 
     if (!post) {
       return next(
@@ -246,9 +250,15 @@ exports.likePost = async (req, res, next) => {
     post.likes.push(req.user.id);
     await post.save();
 
+    // Fetch the post again with populated author including role
+    const updatedPost = await Post.findById(post._id).populate({
+      path: "author",
+      select: "name avatar role",
+    });
+
     res.status(200).json({
       success: true,
-      data: post,
+      data: updatedPost,
     });
   } catch (error) {
     next(error);
@@ -260,7 +270,10 @@ exports.likePost = async (req, res, next) => {
 // @access  Private
 exports.unlikePost = async (req, res, next) => {
   try {
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findById(req.params.id).populate({
+      path: "author",
+      select: "name avatar role",
+    });
 
     if (!post) {
       return next(
@@ -277,9 +290,15 @@ exports.unlikePost = async (req, res, next) => {
     post.likes = post.likes.filter((like) => like.toString() !== req.user.id);
     await post.save();
 
+    // Fetch the post again with populated author including role
+    const updatedPost = await Post.findById(post._id).populate({
+      path: "author",
+      select: "name avatar role",
+    });
+
     res.status(200).json({
       success: true,
-      data: post,
+      data: updatedPost,
     });
   } catch (error) {
     next(error);
