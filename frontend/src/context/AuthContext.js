@@ -115,11 +115,31 @@ export const AuthProvider = ({ children }) => {
         await loadUser();
 
         toast.success("Registration successful");
+        return { success: true };
       } catch (err) {
         dispatch({ type: "AUTH_ERROR" });
-        const errorMessage = err.response?.data?.error || "Registration failed";
-        toast.error(errorMessage);
-        console.error("Registration error:", err.response?.data);
+        let errorMessage = "Registration failed";
+
+        // Extract error message from different possible structures
+        if (err.response) {
+          if (err.response.data && err.response.data.error) {
+            errorMessage = err.response.data.error;
+          } else if (err.response.data && err.response.data.message) {
+            errorMessage = err.response.data.message;
+          } else if (err.response.statusText) {
+            errorMessage = err.response.statusText;
+          }
+        } else if (err.message) {
+          errorMessage = err.message;
+        }
+
+        console.error("Registration error:", err.response?.data || err.message);
+
+        return {
+          success: false,
+          error: errorMessage,
+          response: err.response,
+        };
       }
     },
     [loadUser]
@@ -144,11 +164,31 @@ export const AuthProvider = ({ children }) => {
         await loadUser();
 
         toast.success("Login successful");
+        return { success: true };
       } catch (err) {
         dispatch({ type: "AUTH_ERROR" });
-        const errorMessage = err.response?.data?.error || "Login failed";
-        toast.error(errorMessage);
-        console.error("Login error:", err.response?.data);
+        let errorMessage = "Login failed";
+
+        // Extract error message from different possible structures
+        if (err.response) {
+          if (err.response.data && err.response.data.error) {
+            errorMessage = err.response.data.error;
+          } else if (err.response.data && err.response.data.message) {
+            errorMessage = err.response.data.message;
+          } else if (err.response.statusText) {
+            errorMessage = err.response.statusText;
+          }
+        } else if (err.message) {
+          errorMessage = err.message;
+        }
+
+        console.error("Login error:", err.response?.data || err.message);
+
+        return {
+          success: false,
+          error: errorMessage,
+          response: err.response,
+        };
       }
     },
     [loadUser]
@@ -177,11 +217,31 @@ export const AuthProvider = ({ children }) => {
         payload: res.data.data,
       });
       toast.success("Profile updated successfully");
+      return { success: true };
     } catch (err) {
       dispatch({ type: "AUTH_ERROR" });
-      const errorMessage =
-        err.response?.data?.error || "Failed to update profile";
+      let errorMessage = "Failed to update profile";
+
+      // Extract error message from different possible structures
+      if (err.response) {
+        if (err.response.data && err.response.data.error) {
+          errorMessage = err.response.data.error;
+        } else if (err.response.data && err.response.data.message) {
+          errorMessage = err.response.data.message;
+        } else if (err.response.statusText) {
+          errorMessage = err.response.statusText;
+        }
+      } else if (err.message) {
+        errorMessage = err.message;
+      }
+
       toast.error(errorMessage);
+
+      return {
+        success: false,
+        error: errorMessage,
+        response: err.response,
+      };
     }
   }, []);
 
