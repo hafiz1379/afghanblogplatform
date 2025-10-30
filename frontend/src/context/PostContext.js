@@ -144,7 +144,7 @@ export const PostProvider = ({ children }) => {
         payload: err.response?.data?.error || "Failed to load posts",
       });
     }
-  }, []); 
+  }, []);
 
   // Get single post using useCallback
   const getPost = useCallback(async (id) => {
@@ -215,7 +215,7 @@ export const PostProvider = ({ children }) => {
       toast.success("Post deleted successfully");
     } catch (err) {
       dispatch({
-        type: "SET_ERROR",
+        type: "setLoading",
         payload: err.response?.data?.error || "Failed to delete post",
       });
       toast.error(err.response?.data?.error || "Failed to delete post");
@@ -230,8 +230,10 @@ export const PostProvider = ({ children }) => {
         type: "POST_LIKED",
         payload: res.data.data,
       });
+      return { success: true };
     } catch (err) {
       toast.error(err.response?.data?.error || "Failed to like post");
+      return { success: false, error: err.response?.data?.error };
     }
   }, []);
 
@@ -243,8 +245,10 @@ export const PostProvider = ({ children }) => {
         type: "POST_UNLIKED",
         payload: res.data.data,
       });
+      return { success: true };
     } catch (err) {
       toast.error(err.response?.data?.error || "Failed to unlike post");
+      return { success: false, error: err.response?.data?.error };
     }
   }, []);
 
