@@ -26,21 +26,21 @@ function App() {
     <AuthProvider>
       <UserProvider>
         {" "}
-        {/* اپلیکیشن را با UserProvider بپوشانید */}
+        {/* Wrap the application with UserProvider */}
         <PostProvider>
           <Router>
             <div className="min-h-screen flex flex-col">
               <Header />
               <main className="flex-grow pt-16">
                 <Routes>
-                  {/* ... مسیرهای قبلی */}
+                  {/* Public routes */}
                   <Route path="/" element={<Home />} />
                   <Route path="/posts" element={<Posts />} />
                   <Route path="/posts/:id" element={<PostDetail />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
 
-                  {/* مسیرهای محافظت شده */}
+                  {/* Protected routes */}
                   <Route
                     path="/dashboard"
                     element={
@@ -82,7 +82,7 @@ function App() {
                     }
                   />
 
-                  {/* مسیرهای ادمین */}
+                  {/* Admin routes */}
                   <Route
                     path="/admin/users"
                     element={
