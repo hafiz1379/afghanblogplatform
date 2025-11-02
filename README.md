@@ -16,7 +16,6 @@ A full-featured, bilingual blog platform built with the **MERN stack** (MongoDB,
 - **Responsive UI**: Modern, mobile-first design with Tailwind CSS.
 - **User Notifications**: Success and error messages via Toast notifications.
 - **Robust Error Handling**: Centralized error middleware for Express.
-- **Multi-Language Support**: English & Persian with RTL interface support.
 
 ---
 
@@ -160,7 +159,6 @@ npm start
 - **Create Posts**: After logging in, use the dashboard to add posts.
 - **Manage Posts**: Edit or delete posts you own.
 - **Interact**: Like posts and add comments.
-- **Language Switching**: Switch between English and Persian in the top navigation.
 - **Admin Panel**: Admin users can manage all posts and users.
 
 ---
