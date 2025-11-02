@@ -8,9 +8,7 @@ const NAV_LINKS = [
   { path: "/posts", label: "Posts" },
 ];
 
-const AUTH_NAV_LINKS = [
-  { path: "/dashboard", label: "Dashboard" },
-];
+const AUTH_NAV_LINKS = [{ path: "/dashboard", label: "Dashboard" }];
 
 const SCROLL_THRESHOLD = 10;
 const AVATAR_SIZE = 36; // in pixels
@@ -58,7 +56,11 @@ const Header = () => {
   }, []);
 
   // Close mobile menu on route change
-  useEffect(() => setIsMenuOpen(false), [location.pathname]);
+  useEffect(() => {
+    setIsMenuOpen(false);
+    // Scroll to top when route changes
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   // Generate safe avatar URL
   const getAvatarUrl = useCallback(() => {
@@ -368,7 +370,22 @@ const MobileMenu = memo(({ isOpen, isAuthenticated, user, handleLogout }) => (
           </button>
         </>
       )}
-      {!isAuthenticated && <AuthButtons />}
+      {!isAuthenticated && (
+        <div className="space-y-2 px-4">
+          <Link
+            to="/login"
+            className="block w-full text-center text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition font-medium py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800"
+          >
+            Login
+          </Link>
+          <Link
+            to="/register"
+            className="block w-full text-center bg-gradient-to-r from-blue-500 to-teal-400 hover:from-blue-600 hover:to-teal-500 text-white px-5 py-3 rounded-full transition transform hover:scale-105 shadow-md font-medium"
+          >
+            Register
+          </Link>
+        </div>
+      )}
     </div>
   </div>
 ));
