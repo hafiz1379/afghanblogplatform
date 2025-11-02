@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   // Set base URL
-  axios.defaults.baseURL = "http://localhost:5000/api";
+  axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
   // Load user for authenticated routes using useCallback
   const loadUser = useCallback(async () => {
