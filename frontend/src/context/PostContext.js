@@ -116,7 +116,7 @@ export const PostProvider = ({ children }) => {
   const { isAuthenticated } = useAuth();
 
   // Set base URL
-  axios.defaults.baseURL = "http://localhost:5000/api";
+  axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
   // Get all posts for a specific user
   const getPosts = useCallback(async (page = 1, limit = 10, filters = {}) => {
