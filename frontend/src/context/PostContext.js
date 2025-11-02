@@ -2,7 +2,6 @@ import React, {
   createContext,
   useContext,
   useReducer,
-  useEffect,
   useCallback,
 } from "react";
 import axios from "axios";
@@ -113,6 +112,7 @@ const postReducer = (state, action) => {
 // Provider component
 export const PostProvider = ({ children }) => {
   const [state, dispatch] = useReducer(postReducer, initialState);
+  // eslint-disable-next-line no-unused-vars
   const { isAuthenticated } = useAuth();
 
   // Set base URL
