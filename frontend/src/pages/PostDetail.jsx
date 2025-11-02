@@ -10,14 +10,8 @@ import { toast } from "react-toastify";
 const PostDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const {
-    getPost,
-    post,
-    loading,
-    likePost,
-    unlikePost,
-    deletePost,
-  } = usePost();
+  const { getPost, post, loading, likePost, unlikePost, deletePost } =
+    usePost();
   const { isAuthenticated, user } = useAuth();
   const [localPost, setLocalPost] = useState(null);
 
@@ -182,19 +176,20 @@ const PostDetail = () => {
                       className="w-12 h-12 rounded-full object-cover mr-4 border-2 border-gray-200"
                       onError={(e) => {
                         // Hide broken image and show fallback
-                        e.target.style.display = 'none';
-                        e.target.nextElementSibling.style.display = 'flex';
+                        e.target.style.display = "none";
+                        e.target.nextElementSibling.style.display = "flex";
                       }}
                     />
                   ) : null}
                   {/* Fallback avatar when no image or image fails to load */}
-                  <div 
+                  <div
                     className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center mr-4 border-2 border-gray-200"
-                    style={{ display: currentPost.author?.avatar ? 'none' : 'flex' }}
+                    style={{
+                      display: currentPost.author?.avatar ? "none" : "flex",
+                    }}
                   >
                     <span className="text-white font-semibold">
-                      {currentPost.author?.name?.charAt(0).toUpperCase() ??
-                        "?"}
+                      {currentPost.author?.name?.charAt(0).toUpperCase() ?? "?"}
                     </span>
                   </div>
                   <div>
@@ -275,12 +270,12 @@ const PostDetail = () => {
               <div className="px-6 md:px-8 pb-6">
                 <div className="rounded-xl overflow-hidden">
                   <img
-                    src={`http://localhost:5000/uploads/${currentPost.image}`}
+                    src={`${process.env.REACT_APP_API_URL}/uploads/${currentPost.image}`}
                     alt={currentPost.title}
                     className="w-full h-auto object-cover"
                     onError={(e) => {
                       // Hide broken image and show fallback
-                      e.target.style.display = 'none';
+                      e.target.style.display = "none";
                       e.target.parentElement.innerHTML = `
                         <div class="w-full h-64 bg-gray-200 flex items-center justify-center">
                           <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

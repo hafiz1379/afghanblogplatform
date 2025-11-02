@@ -2,7 +2,6 @@ import React, {
   createContext,
   useContext,
   useReducer,
-  useEffect,
   useCallback,
 } from "react";
 import axios from "axios";
@@ -113,10 +112,11 @@ const postReducer = (state, action) => {
 // Provider component
 export const PostProvider = ({ children }) => {
   const [state, dispatch] = useReducer(postReducer, initialState);
+  // eslint-disable-next-line no-unused-vars
   const { isAuthenticated } = useAuth();
 
   // Set base URL
-  axios.defaults.baseURL = "http://localhost:5000/api";
+  axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
   // Get all posts for a specific user
   const getPosts = useCallback(async (page = 1, limit = 10, filters = {}) => {
@@ -222,36 +222,62 @@ export const PostProvider = ({ children }) => {
     }
   }, []);
 
+  const { token } = useAuth();
+
   // Like post using useCallback
-  const likePost = useCallback(async (id) => {
-    try {
-      const res = await axios.put(`/posts/${id}/like`);
-      dispatch({
-        type: "POST_LIKED",
-        payload: res.data.data,
-      });
-      return { success: true };
-    } catch (err) {
-      toast.error(err.response?.data?.error || "Failed to like post");
-      return { success: false, error: err.response?.data?.error };
-    }
-  }, []);
+  const likePost = useCallback(
+    async (id) => {
+      try {
+        const res = await axios.put(
+          `/posts/${id}/like`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-  // Unlike post using useCallback
-  const unlikePost = useCallback(async (id) => {
-    try {
-      const res = await axios.put(`/posts/${id}/unlike`);
-      dispatch({
-        type: "POST_UNLIKED",
-        payload: res.data.data,
-      });
-      return { success: true };
-    } catch (err) {
-      toast.error(err.response?.data?.error || "Failed to unlike post");
-      return { success: false, error: err.response?.data?.error };
-    }
-  }, []);
+        dispatch({
+          type: "POST_LIKED",
+          payload: res.data.data,
+        });
 
+        return { success: true };
+      } catch (err) {
+        toast.error(err.response?.data?.error || "Failed to like post");
+        return { success: false, error: err.response?.data?.error };
+      }
+    },
+    [token]
+  );
+
+  const unlikePost = useCallback(
+    async (id) => {
+      try {
+        const res = await axios.put(
+          `/posts/${id}/unlike`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        dispatch({
+          type: "POST_UNLIKED",
+          payload: res.data.data,
+        });
+
+        return { success: true };
+      } catch (err) {
+        toast.error(err.response?.data?.error || "Failed to unlike post");
+        return { success: false, error: err.response?.data?.error };
+      }
+    },
+    [token]
+  );
   // Set filters using useCallback
   const setFilters = useCallback((filters) => {
     dispatch({ type: "SET_FILTERS", payload: filters });

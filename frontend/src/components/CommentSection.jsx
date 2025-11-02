@@ -5,7 +5,7 @@ import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
 
 // Set baseURL for requests from this component
-axios.defaults.baseURL = "http://localhost:5000/api";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 const CommentSection = ({ postId, comments }) => {
   const { user, isAuthenticated } = useAuth();
