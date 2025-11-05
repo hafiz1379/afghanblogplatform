@@ -6,26 +6,18 @@ const ErrorResponse = require("../utils/errorResponse");
 exports.protect = async (req, res, next) => {
   let token;
 
-  // 1. ابتدا هدر Authorization را بررسی کن (روش استاندارد برای API)
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
   ) {
-    // توکن از هدر استخراج می‌شود
     token = req.headers.authorization.split(" ")[1];
   }
-  // 2. اگر در هدر نبود، می‌توانی کوکی را به عنوان یک روش جایگزین بررسی کنی
-  // else if (req.cookies.token) {
-  //   token = req.cookies.token;
-  // }
 
-  // Make sure token exists
   if (!token) {
     return next(new ErrorResponse("Not authorized to access this route", 401));
   }
 
   try {
-    // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     req.user = await User.findById(decoded.id);
