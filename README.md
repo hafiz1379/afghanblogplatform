@@ -3,7 +3,11 @@
 Afghan Blog is a full-featured blogging platform built with the MERN stack (MongoDB, Express.js, React.js, and Node.js). It offers a clean and intuitive interface for creating, editing, and managing blog posts with ease. Designed for performance and usability, the platform includes secure authentication, and a fully responsive design that ensures a smooth experience across all devices.
 
 ---
+## 🚀 Live Demo
 
+👉 **[View the Live Demo Here](https://afghanblog.netlify.app/)**
+
+---
 ## Features
 
 - **User Authentication**: Secure registration, login, and logout with JWT and HTTP-only cookies.
