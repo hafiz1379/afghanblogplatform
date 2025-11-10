@@ -26,23 +26,9 @@ const CategoryCard = ({ category, index }) => {
     red: "text-red-500",
   };
 
-  // Determine the base URL based on environment
-  const getBaseUrl = () => {
-    // For development, use relative path
-    if (process.env.NODE_ENV === "development") {
-      return "";
-    }
-    // For production, use the full URL
-    return process.env.REACT_APP_API_URL
-      ? process.env.REACT_APP_API_URL.replace("/api", "")
-      : "";
-  };
-
-  const baseUrl = getBaseUrl();
-  const postsUrl = `${baseUrl}/posts`;
 
   return (
-    <Link to={postsUrl} className="block group relative w-full">
+    <Link to="/posts" className="block group relative w-full">
       {/* Card with gradient border effect */}
       <div className="relative h-full overflow-hidden rounded-xl sm:rounded-2xl bg-white shadow-md sm:shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 sm:hover:-translate-y-3">
         {/* Gradient overlay that appears on hover */}
