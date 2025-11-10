@@ -5,13 +5,14 @@ import { useAuth } from "../context/AuthContext";
 // Constants for better maintainability
 const NAV_LINKS = [
   { path: "/", label: "Home" },
+  { path: "/about", label: "About" },
   { path: "/posts", label: "Posts" },
 ];
 
 const AUTH_NAV_LINKS = [{ path: "/dashboard", label: "Dashboard" }];
 
 const SCROLL_THRESHOLD = 10;
-const AVATAR_SIZE = 36; // in pixels
+const AVATAR_SIZE = 36;
 
 /**
  * Header component with navigation, authentication, and responsive design
