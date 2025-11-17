@@ -1,17 +1,33 @@
-# 🌍 **Afghan Blog Platform**
+# 🌍 Afghan Blog Platform (MERN Stack)
+
+<div align="center">
+  <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB">
+  <img src="https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=express&logoColor=white" alt="Express.js">
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
+  <img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="TailwindCSS">
+</div>
 
 A **modern, full-featured blogging platform** built with the **MERN Stack (MongoDB, Express.js, React.js, Node.js)** — empowering creators to write, share, and manage blogs effortlessly.  
 Designed for **performance, security, and accessibility**, Afghan Blog provides a seamless experience across all devices.
 
 ---
 
-## 🚀 **Live Demo**
+## 🚀 Live Demo
 
-👉 [**View the Live App**](https://afghanblog.netlify.app/)
+<div align="center">
+  <a href="https://afghanblog.netlify.app/">
+    <img src="https://img.shields.io/badge/Live_Demo-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Live Demo">
+  </a>
+</div>
 
 ---
 
 ## ✨ **Key Features**
+<div align="center">
+  <img src="https://img.icons8.com/color/96/000000/blog.png" width="60">
+</div>
 
 - 🔐 **User Authentication** – Secure login, registration, and logout using **JWT** and **HTTP-only cookies**.  
 - 📝 **Full Post Management (CRUD)** – Create, edit, update, and delete posts with ease.  
