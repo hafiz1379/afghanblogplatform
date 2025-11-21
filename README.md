@@ -60,74 +60,6 @@ Designed for **performance, security, and accessibility**, Afghan Blog provides 
 
 ---
 
-## 📁 **Project Structure**
-
-```
-
-AfghanBlogPlatform/
-├── backend/
-│   ├── controllers/
-│   │   ├── auth.js
-│   │   ├── comments.js
-│   │   ├── posts.js
-│   │   └── users.js
-│   ├── middleware/
-│   │   ├── auth.js
-│   │   └── error.js
-│   ├── models/
-│   │   ├── Comment.js
-│   │   ├── Post.js
-│   │   └── User.js
-│   ├── routes/
-│   │   ├── auth.js
-│   │   ├── comments.js
-│   │   ├── posts.js
-│   │   └── users.js
-│   ├── utils/
-│   │   ├── errorResponse.js
-│   │   └── sendTokenResponse.js
-│   ├── .env
-│   ├── package.json
-│   └── server.js
-└── frontend/
-├── public/
-├── src/
-│   ├── components/
-│   │   ├── AdminRoute.jsx
-│   │   ├── CommentSection.jsx
-│   │   ├── Footer.jsx
-│   │   ├── Header.jsx
-│   │   ├── LanguageSelector.jsx
-│   │   ├── LoadingSpinner.jsx
-│   │   ├── PostCard.jsx
-│   │   └── ProtectedRoute.jsx
-│   ├── context/
-│   │   ├── AuthContext.js
-│   │   ├── PostContext.js
-│   │   └── UserContext.js
-│   ├── pages/
-│   │   ├── AdminPosts.jsx
-│   │   ├── AdminUsers.jsx
-│   │   ├── CreatePost.jsx
-│   │   ├── Dashboard.jsx
-│   │   ├── EditPost.jsx
-│   │   ├── Home.jsx
-│   │   ├── Login.jsx
-│   │   ├── MyPosts.jsx
-│   │   ├── PostDetail.jsx
-│   │   ├── Posts.jsx
-│   │   ├── Profile.jsx
-│   │   └── Register.jsx
-│   ├── App.jsx
-│   ├── index.css
-│   └── index.jsx
-├── package.json
-└── tailwind.config.js
-
-````
-
----
-
 ## ⚙️ **Installation & Setup**
 
 ### 🔧 Prerequisites
@@ -216,8 +148,6 @@ This project is licensed under the **[MIT License](LICENSE)** — free to use, m
 ## 🙏 **Acknowledgements**
 
 * Inspired by **MERN stack tutorials** and **open-source blog platforms**.
-* Special thanks to all **contributors** enhancing UI/UX, performance, and accessibility.
-* ❤️ Community-driven — built with passion for developers worldwide.
 
 ---
 
