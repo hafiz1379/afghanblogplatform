@@ -147,7 +147,7 @@ This project is licensed under the **[MIT License](LICENSE)** — free to use, m
 
 ## 🙏 **Acknowledgements**
 
-* Inspired by **MERN stack tutorials** and **open-source blog platforms**.
+Thanks to the MERN open-source community and the tools that made this project possible. Appreciation to everyone who supported and inspired the development of Afghan Blog.
 
 ---
 
