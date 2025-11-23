@@ -9,8 +9,8 @@
   <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="TailwindCSS">
 </div>
 
-A **modern, full-featured blogging platform** built with the **MERN Stack (MongoDB, Express.js, React.js, Node.js)** — empowering creators to write, share, and manage blogs effortlessly.  
-Designed for **performance, security, and accessibility**, Afghan Blog provides a seamless experience across all devices.
+A **modern, full-featured blogging platform** built with the **MERN Stack (MongoDB, Express.js, React.js, Node.js)** — designed to help creators write, publish, and manage their blogs with ease.  
+With a strong focus on **performance, security, and accessibility**, Afghan Blog delivers a smooth and seamless experience on any device.
 
 ---
 
