@@ -1,106 +1,199 @@
 import React from "react";
 
 const HeroSection = ({ isLoaded, searchTerm, setSearchTerm, handleSearch }) => (
-  <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white overflow-hidden">
-    {/* Background Pattern */}
-    <div className="absolute inset-0 opacity-10">
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%220.4%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+  <section className="relative min-h-[90vh] flex items-center bg-gradient-to-br from-slate-50 via-white to-indigo-50 text-slate-900 overflow-hidden">
+    {/* Background Elements */}
+    <div className="absolute inset-0">
+      {/* Gradient Orbs */}
+      <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-indigo-200/40 rounded-full blur-[128px]"></div>
+      <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-200/40 rounded-full blur-[128px]"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-pink-200/30 rounded-full blur-[128px]"></div>
+
+      {/* Grid Pattern Overlay */}
+      <div
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0,0,0,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.1) 1px, transparent 1px)`,
+          backgroundSize: "64px 64px",
+        }}
+      ></div>
     </div>
 
-    {/* Animated Background Elements */}
-    <div className="absolute top-20 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-    <div className="absolute top-40 right-10 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-    <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+    {/* Floating Particles */}
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {[...Array(15)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute w-2 h-2 bg-indigo-300/40 rounded-full animate-float"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 5}s`,
+            animationDuration: `${10 + Math.random() * 20}s`,
+          }}
+        ></div>
+      ))}
+    </div>
 
-    <div className="relative container mx-auto px-4 py-20 md:py-28">
+    <div className="relative container mx-auto px-4 py-20 md:py-32 z-10">
       <div className="max-w-4xl mx-auto text-center">
-        <h1
-          className={`text-4xl md:text-6xl font-bold mb-6 transition-all duration-1000 transform ${
+        {/* Badge */}
+        <div
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 border border-indigo-100 shadow-sm mb-8 transition-all duration-1000 transform ${
             isLoaded ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
         >
-          Afghan Blog Platform
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <span className="text-sm text-slate-600 font-medium">
+            Discover Amazing Stories
+          </span>
+        </div>
+
+        {/* Main Heading */}
+        <h1
+          className={`text-4xl sm:text-5xl md:text-7xl font-bold mb-6 tracking-tight transition-all duration-1000 transform ${
+            isLoaded ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+          }`}
+        >
+          <span className="block text-slate-900">Afghan Blog</span>
+          <span className="block mt-2 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+            Platform
+          </span>
         </h1>
+
+        {/* Subtitle */}
         <p
-          className={`text-xl md:text-2xl mb-8 transition-all duration-1000 delay-300 transform ${
+          className={`text-lg md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed transition-all duration-1000 delay-200 transform ${
             isLoaded ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
         >
           Discover stories, ideas, and knowledge from writers around the world.
+          <span className="text-slate-700 font-medium">
+            {" "}
+            Join our community of creators and readers.
+          </span>
         </p>
+
+        {/* Search Bar */}
         <form
           onSubmit={handleSearch}
-          className={`max-w-lg mx-auto transition-all duration-1000 delay-500 transform ${
+          className={`max-w-xl mx-auto transition-all duration-1000 delay-400 transform ${
             isLoaded ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
         >
           <div className="relative group">
-            <label htmlFor="searchInput" className="sr-only">
-              Search posts
-            </label>
-            <input
-              type="text"
-              id="searchInput"
-              name="search"
-              placeholder="Search posts..."
-              className="w-full px-6 py-4 pr-12 rounded-full text-gray-800 shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-300"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <button
-              type="submit"
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white p-3 rounded-full transition-all duration-300 shadow-md hover:shadow-lg"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
+            {/* Glow Effect */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-20 group-focus-within:opacity-25 blur-xl transition-opacity duration-500"></div>
+
+            <div className="relative flex items-center bg-white border border-slate-200 rounded-2xl shadow-lg shadow-slate-200/50 overflow-hidden focus-within:border-indigo-300 focus-within:ring-4 focus-within:ring-indigo-100 transition-all duration-300">
+              {/* Search Icon */}
+              <div className="pl-5 pr-3">
+                <svg
+                  className="w-5 h-5 text-slate-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </div>
+
+              <label htmlFor="searchInput" className="sr-only">
+                Search posts
+              </label>
+              <input
+                type="text"
+                id="searchInput"
+                name="search"
+                placeholder="Search articles, topics, or authors..."
+                className="flex-1 bg-transparent py-4 pr-4 text-slate-900 placeholder-slate-400 focus:outline-none text-base"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+
+              <button
+                type="submit"
+                className="relative m-2 px-6 py-2.5 rounded-xl text-sm font-semibold text-white overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/25 group/btn"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                ></path>
-              </svg>
-            </button>
+                <span className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></span>
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700"></span>
+                <span className="relative">Search</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Quick Search Tags */}
+          <div className="flex flex-wrap justify-center gap-2 mt-4">
+            {["Technology", "Culture", "Travel", "Food"].map((tag) => (
+              <button
+                key={tag}
+                type="button"
+                onClick={() => setSearchTerm(tag)}
+                className="px-3 py-1.5 text-xs font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900 transition-all duration-200 shadow-sm"
+              >
+                {tag}
+              </button>
+            ))}
           </div>
         </form>
 
-        {/* Stats */}
+        {/* Stats Section */}
         <div
-          className={`grid grid-cols-3 gap-4 mt-16 transition-all duration-1000 delay-700 transform ${
+          className={`grid grid-cols-3 gap-4 md:gap-8 mt-16 md:mt-20 transition-all duration-1000 delay-600 transform ${
             isLoaded ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
         >
-          <div className="text-center">
-            <div className="text-3xl font-bold">50+</div>
-            <div className="text-sm opacity-80">Articles</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold">20+</div>
-            <div className="text-sm opacity-80">Writers</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold">5K+</div>
-            <div className="text-sm opacity-80">Readers</div>
+          {[
+            { value: "50+", label: "Articles", icon: "📝" },
+            { value: "20+", label: "Writers", icon: "✍️" },
+            { value: "5K+", label: "Readers", icon: "👥" },
+          ].map((stat) => (
+            <div
+              key={stat.label}
+              className="group relative p-4 md:p-6 rounded-2xl bg-white/80 border border-slate-200 shadow-sm hover:shadow-lg hover:border-slate-300 transition-all duration-300"
+            >
+              {/* Hover Glow */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+              <div className="relative">
+                <div className="text-2xl mb-2 hidden md:block">{stat.icon}</div>
+                <div className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+                  {stat.value}
+                </div>
+                <div className="text-sm text-slate-500 mt-1">{stat.label}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Scroll Indicator */}
+        <div
+          className={`mt-16 transition-all duration-1000 delay-700 transform ${
+            isLoaded ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+          }`}
+        >
+          <div className="flex flex-col items-center gap-2 text-slate-400">
+            <span className="text-xs uppercase tracking-widest">
+              Scroll to explore
+            </span>
+            <div className="w-6 h-10 rounded-full border-2 border-slate-300 flex justify-center p-2">
+              <div className="w-1 h-2 bg-slate-400 rounded-full animate-bounce"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    {/* Wave Separator */}
-    <div className="absolute bottom-0 left-0 right-0">
-      <svg
-        className="w-full h-12 md:h-24 fill-current text-white"
-        viewBox="0 0 1440 54"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d="M0 22L120 16.7C240 11 480 1.00001 720 0.700012C960 1.00001 1200 11 1320 16.7L1440 22V54H1320C1200 54 960 54 720 54C480 54 240 54 120 54H0V22Z"></path>
-      </svg>
-    </div>
+    {/* Bottom Gradient Fade */}
+    <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent"></div>
   </section>
 );
 
