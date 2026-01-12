@@ -2,36 +2,130 @@ import React from "react";
 
 const HeroSection = () => {
   return (
-    <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white py-20 md:py-28 overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%220.4%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+    <section className="relative bg-gradient-to-br from-slate-50 via-white to-indigo-50 pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Gradient Orbs */}
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-indigo-200/50 rounded-full blur-[128px]"></div>
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-200/50 rounded-full blur-[128px]"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-pink-200/30 rounded-full blur-[150px]"></div>
+
+        {/* Grid Pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0,0,0,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.1) 1px, transparent 1px)`,
+            backgroundSize: "64px 64px",
+          }}
+        ></div>
       </div>
 
-      {/* Animated Background Elements */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-      <div className="absolute top-40 right-10 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-      <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
-
-      <div className="relative container mx-auto px-4 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-6 transition-all duration-1000 transform translate-y-0 opacity-100">
-          About Afghan Blog
-        </h1>
-        <p className="text-xl md:text-2xl max-w-3xl mx-auto opacity-90 leading-relaxed">
-          Discover the story, mission, and purpose behind the platform that
-          brings Afghan voices to the world.
-        </p>
+      {/* Floating Particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-2 h-2 bg-indigo-400/30 rounded-full animate-float"
+            style={{
+              left: `${10 + i * 12}%`,
+              top: `${20 + (i % 3) * 25}%`,
+              animationDelay: `${i * 0.5}s`,
+              animationDuration: `${8 + i * 2}s`,
+            }}
+          ></div>
+        ))}
       </div>
 
-      {/* Wave Separator */}
+      <div className="relative container mx-auto px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 border border-indigo-100 shadow-sm mb-8 backdrop-blur-sm">
+            <svg
+              className="w-4 h-4 text-indigo-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span className="text-sm font-medium text-indigo-600">
+              Our Story
+            </span>
+          </div>
+
+          {/* Main Heading */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight">
+            <span className="text-slate-900">About</span>
+            <span className="block mt-2 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+              Afghan Blog
+            </span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed mb-10">
+            Discover the story, mission, and purpose behind the platform that
+            brings Afghan voices to the world and connects communities through
+            the power of storytelling.
+          </p>
+
+          {/* Stats Row */}
+          <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+            {[
+              { value: "2025", label: "Founded" },
+              { value: "50+", label: "Articles" },
+              { value: "20+", label: "Writers" },
+              { value: "5K+", label: "Readers" },
+            ].map((stat, index) => (
+              <div key={stat.label} className="text-center">
+                <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                  {stat.value}
+                </div>
+                <div className="text-sm text-slate-500 mt-1">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Decorative Line */}
+          <div className="flex items-center justify-center gap-2 mt-12">
+            <div className="w-12 h-1 rounded-full bg-slate-200"></div>
+            <div className="w-24 h-1 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+            <div className="w-12 h-1 rounded-full bg-slate-200"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Wave Separator */}
       <div className="absolute bottom-0 left-0 right-0">
         <svg
-          className="w-full h-12 md:h-24 fill-current text-white"
-          viewBox="0 0 1440 54"
+          className="w-full h-16 md:h-24"
+          viewBox="0 0 1440 74"
+          fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
         >
-          <path d="M0 22L120 16.7C240 11 480 1.00001 720 0.700012C960 1.00001 1200 11 1320 16.7L1440 22V54H1320C1200 54 960 54 720 54C480 54 240 54 120 54H0V22Z"></path>
+          <path
+            d="M0 24C240 74 480 74 720 49C960 24 1200 24 1440 49V74H0V24Z"
+            fill="white"
+          />
         </svg>
+      </div>
+
+      {/* Side Decorations */}
+      <div className="absolute top-1/2 left-8 -translate-y-1/2 hidden lg:flex flex-col gap-3">
+        <div className="w-2 h-2 rounded-full bg-indigo-400"></div>
+        <div className="w-2 h-8 rounded-full bg-gradient-to-b from-indigo-400 to-purple-400"></div>
+        <div className="w-2 h-2 rounded-full bg-purple-400"></div>
+      </div>
+
+      <div className="absolute top-1/2 right-8 -translate-y-1/2 hidden lg:flex flex-col gap-3">
+        <div className="w-2 h-2 rounded-full bg-purple-400"></div>
+        <div className="w-2 h-8 rounded-full bg-gradient-to-b from-purple-400 to-pink-400"></div>
+        <div className="w-2 h-2 rounded-full bg-pink-400"></div>
       </div>
     </section>
   );
