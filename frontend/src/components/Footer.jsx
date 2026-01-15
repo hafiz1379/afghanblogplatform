@@ -1,14 +1,22 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const quickLinks = [
     { name: "About Us", href: "/about" },
+    { name: "All Posts", href: "/posts" },
     { name: "Contact", href: "#" },
     { name: "Privacy Policy", href: "#" },
     { name: "Terms of Service", href: "#" },
-    { name: "FAQ", href: "#" },
+  ];
+
+  const categories = [
+    { name: "Technology", href: "/posts" },
+    { name: "Lifestyle", href: "/posts" },
+    { name: "Business", href: "/posts" },
+    { name: "Entertainment", href: "/posts" },
   ];
 
   const socialLinks = [
@@ -18,37 +26,60 @@ const Footer = () => {
       icon: (
         <path d="M24 12.073c0-6.627-5.373-12-12-12S0 5.446 0 12.073C0 18.062 4.388 23.027 10.125 23.927v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953h-1.514c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
       ),
+      color: "hover:bg-blue-500",
     },
     {
       name: "Twitter",
       href: "#",
       icon: (
-        <path d="M23.953 4.57a10 10 0 01-2.825.775A4.958 4.958 0 0023.29 2.62a9.856 9.856 0 01-3.127 1.184 4.92 4.92 0 00-8.384 4.482A13.945 13.945 0 011.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417A9.867 9.867 0 012.92 21.09c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63a9.935 9.935 0 002.663-2.05z" />
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
       ),
+      color: "hover:bg-slate-800",
     },
     {
       name: "Instagram",
       href: "#",
       icon: (
-        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849s-.012 3.584-.069 4.849c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.645.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92C2.163 15.596 2.15 15.217 2.15 12s.013-3.583.07-4.849c.149-3.227 1.664-4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.74 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.74 0 12s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.74 24 12 24s3.667-.014 4.947-.072c4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948s-.014-3.667-.072-4.947C23.728 2.69 21.308.272 16.947.072 15.667.014 15.259 0 12 0zM5.838 12a6.162 6.162 0 1112.324 0A6.162 6.162 0 015.838 12zM18.406 4.594a1.44 1.44 0 112.881 0 1.44 1.44 0 01-2.881 0z" />
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
       ),
+      color: "hover:bg-gradient-to-br hover:from-purple-500 hover:to-pink-500",
+    },
+    {
+      name: "LinkedIn",
+      href: "#",
+      icon: (
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+      ),
+      color: "hover:bg-blue-600",
     },
   ];
 
   return (
-    <footer className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2zM6 4V0H4v4H0v2h4v4h2V6h4V4zM34 4V0h-2v4h-4v2h4v4h2V6h4V4h-4z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+    <footer className="relative bg-white border-t border-slate-200 overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Gradient Orbs */}
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-100/50 rounded-full blur-[120px]"></div>
+        <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-purple-100/50 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-1/2 right-1/4 w-[200px] h-[200px] bg-pink-100/30 rounded-full blur-[100px]"></div>
 
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-80"></div>
+        {/* Dot Pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)`,
+            backgroundSize: "32px 32px",
+          }}
+        ></div>
+      </div>
 
-      <div className="relative container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {/* Main Footer Content */}
+      <div className="relative container mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           {/* Company Info */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-teal-400 rounded-lg flex items-center justify-center">
+          <div className="lg:col-span-1">
+            <Link to="/" className="inline-flex items-center gap-3 mb-6 group">
+              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/25 group-hover:shadow-indigo-500/40 transition-shadow duration-300">
                 <svg
                   className="w-6 h-6 text-white"
                   fill="currentColor"
@@ -57,111 +88,198 @@ const Footer = () => {
                   <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">
+              <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
                 Afghan Blog
-              </h3>
-            </div>
-            <p className="text-gray-300 leading-relaxed">
+              </span>
+            </Link>
+            <p className="text-slate-600 leading-relaxed mb-6">
               A platform for sharing stories and ideas from Afghanistan and
-              around the world.
+              around the world. Join our community of writers and readers.
             </p>
-            <div className="flex space-x-2 pt-2">
-              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
-              <div className="w-2 h-2 bg-teal-400 rounded-full animate-pulse delay-75" />
-              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse delay-150" />
+
+            {/* Decorative dots */}
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></div>
+              <div
+                className="w-2 h-2 rounded-full bg-purple-500 animate-pulse"
+                style={{ animationDelay: "0.2s" }}
+              ></div>
+              <div
+                className="w-2 h-2 rounded-full bg-pink-500 animate-pulse"
+                style={{ animationDelay: "0.4s" }}
+              ></div>
             </div>
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-4">
-            <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">
+          <div>
+            <h3 className="text-lg font-semibold text-slate-900 mb-6 flex items-center gap-2">
+              <span className="w-8 h-1 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500"></span>
               Quick Links
             </h3>
             <ul className="space-y-3">
               {quickLinks.map((item) => (
-                <li key={item.name} className="group">
-                  <a
-                    href={item.href}
-                    className="text-gray-300 hover:text-white transition-all duration-300 flex items-center group-hover:translate-x-1"
+                <li key={item.name}>
+                  <Link
+                    to={item.href}
+                    className="group flex items-center text-slate-600 hover:text-indigo-600 transition-colors duration-300"
                   >
-                    <span className="w-0 h-0.5 bg-gradient-to-r from-blue-400 to-teal-400 mr-0 group-hover:w-4 group-hover:mr-2 transition-all duration-300" />
+                    <span className="w-0 group-hover:w-3 h-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 mr-0 group-hover:mr-2 transition-all duration-300 rounded-full"></span>
                     {item.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Connect Section */}
-          <div className="space-y-4">
-            <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">
-              Connect With Us
+          {/* Categories */}
+          <div>
+            <h3 className="text-lg font-semibold text-slate-900 mb-6 flex items-center gap-2">
+              <span className="w-8 h-1 rounded-full bg-gradient-to-r from-purple-500 to-pink-500"></span>
+              Categories
             </h3>
-            <p className="text-gray-300 mb-4">
-              Follow us on social media for updates and news.
-            </p>
-            <div className="flex space-x-4">
-              {socialLinks.map(({ name, href, icon }) => (
-                <a
-                  key={name}
-                  href={href}
-                  aria-label={name}
-                  className="group relative w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center overflow-hidden transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-500 hover:to-teal-400"
-                >
-                  <svg
-                    className="h-6 w-6 text-white z-10"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
+            <ul className="space-y-3">
+              {categories.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    to={item.href}
+                    className="group flex items-center text-slate-600 hover:text-purple-600 transition-colors duration-300"
                   >
-                    {icon}
-                  </svg>
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-teal-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </a>
+                    <span className="w-0 group-hover:w-3 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 mr-0 group-hover:mr-2 transition-all duration-300 rounded-full"></span>
+                    {item.name}
+                  </Link>
+                </li>
               ))}
+            </ul>
+          </div>
+
+          {/* Newsletter & Social */}
+          <div>
+            <h3 className="text-lg font-semibold text-slate-900 mb-6 flex items-center gap-2">
+              <span className="w-8 h-1 rounded-full bg-gradient-to-r from-pink-500 to-indigo-500"></span>
+              Stay Updated
+            </h3>
+            <p className="text-slate-600 mb-4">
+              Subscribe to our newsletter for the latest updates.
+            </p>
+
+            {/* Newsletter Form */}
+            <div className="mb-6">
+              <div className="relative group">
+                {/* Glow Effect */}
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-xl opacity-0 group-hover:opacity-30 group-focus-within:opacity-40 blur transition-opacity duration-300"></div>
+
+                <div className="relative flex bg-white border border-slate-200 rounded-xl overflow-hidden focus-within:border-indigo-300 transition-colors duration-300">
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    className="flex-1 px-4 py-3 text-slate-700 placeholder-slate-400 bg-transparent focus:outline-none text-sm"
+                  />
+                  <button className="px-4 py-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white text-sm font-medium hover:shadow-lg hover:shadow-indigo-500/25 transition-all duration-300">
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </div>
 
-            {/* Newsletter */}
-            <div className="mt-6">
-              <h4 className="text-lg font-semibold mb-2">
-                Subscribe to our newsletter
-              </h4>
-              <div className="flex">
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  className="bg-gray-700 text-white px-4 py-2 rounded-l-lg flex-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                />
-                <button className="bg-gradient-to-r from-blue-500 to-teal-400 hover:from-blue-600 hover:to-teal-500 text-white px-4 py-2 rounded-r-lg transition-all duration-300">
-                  Subscribe
-                </button>
+            {/* Social Links */}
+            <div>
+              <p className="text-sm text-slate-500 mb-3">Follow us</p>
+              <div className="flex items-center gap-3">
+                {socialLinks.map(({ name, href, icon, color }) => (
+                  <a
+                    key={name}
+                    href={href}
+                    aria-label={name}
+                    className={`group relative w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center transition-all duration-300 hover:border-transparent hover:text-white ${color}`}
+                  >
+                    <svg
+                      className="w-5 h-5 text-slate-600 group-hover:text-white transition-colors duration-300"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      {icon}
+                    </svg>
+                  </a>
+                ))}
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Copyright */}
-        <div className="mt-12 pt-8 border-t border-gray-700 text-center">
-          <p className="text-gray-400">
-            &copy; {currentYear} Afghan Blog. All rights reserved.
-          </p>
-          <div className="mt-2 flex justify-center space-x-4 text-sm text-gray-400">
-            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-            <a
-              href="#"
-              className="hover:text-white transition-colors duration-300"
+      {/* Bottom Bar */}
+      <div className="relative border-t border-slate-200">
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            {/* Copyright */}
+            <p className="text-slate-500 text-sm">
+              © {currentYear}{" "}
+              <span className="font-medium text-slate-700">Afghan Blog</span>.
+              All rights reserved.
+            </p>
+
+            {/* Bottom Links */}
+            <div className="flex items-center gap-6 text-sm">
+              <Link
+                to="#"
+                className="text-slate-500 hover:text-indigo-600 transition-colors duration-300"
+              >
+                Terms
+              </Link>
+              <Link
+                to="#"
+                className="text-slate-500 hover:text-indigo-600 transition-colors duration-300"
+              >
+                Privacy
+              </Link>
+              <Link
+                to="#"
+                className="text-slate-500 hover:text-indigo-600 transition-colors duration-300"
+              >
+                Cookies
+              </Link>
+            </div>
+
+            {/* Back to Top */}
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="group flex items-center gap-2 text-sm text-slate-500 hover:text-indigo-600 transition-colors duration-300"
             >
-              Terms of Service
-            </a>
-            <span>•</span>
-            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-            <a
-              href="#"
-              className="hover:text-white transition-colors duration-300"
-            >
-              Privacy Policy
-            </a>
+              <span>Back to top</span>
+              <div className="w-8 h-8 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center group-hover:bg-indigo-50 group-hover:border-indigo-200 transition-all duration-300">
+                <svg
+                  className="w-4 h-4 transition-transform duration-300 group-hover:-translate-y-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 10l7-7m0 0l7 7m-7-7v18"
+                  />
+                </svg>
+              </div>
+            </button>
           </div>
         </div>
+
+        {/* Gradient Line */}
+        <div className="h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
       </div>
     </footer>
   );

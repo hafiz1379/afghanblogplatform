@@ -7,6 +7,52 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import { formatDistanceToNow } from "date-fns";
 import { toast } from "react-toastify";
 
+// Category color mapping
+const CATEGORY_COLORS = {
+  Technology: {
+    bg: "bg-indigo-50",
+    text: "text-indigo-600",
+    border: "border-indigo-100",
+    dot: "bg-indigo-500",
+  },
+  Culture: {
+    bg: "bg-purple-50",
+    text: "text-purple-600",
+    border: "border-purple-100",
+    dot: "bg-purple-500",
+  },
+  Travel: {
+    bg: "bg-emerald-50",
+    text: "text-emerald-600",
+    border: "border-emerald-100",
+    dot: "bg-emerald-500",
+  },
+  Food: {
+    bg: "bg-pink-50",
+    text: "text-pink-600",
+    border: "border-pink-100",
+    dot: "bg-pink-500",
+  },
+  Politics: {
+    bg: "bg-slate-100",
+    text: "text-slate-600",
+    border: "border-slate-200",
+    dot: "bg-slate-500",
+  },
+  Sports: {
+    bg: "bg-amber-50",
+    text: "text-amber-600",
+    border: "border-amber-100",
+    dot: "bg-amber-500",
+  },
+  default: {
+    bg: "bg-slate-50",
+    text: "text-slate-600",
+    border: "border-slate-200",
+    dot: "bg-slate-400",
+  },
+};
+
 const PostDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -15,25 +61,21 @@ const PostDetail = () => {
   const { isAuthenticated, user } = useAuth();
   const [localPost, setLocalPost] = useState(null);
 
-  // Function to safely get post data
   const getPostData = useCallback(() => {
     return localPost || post;
   }, [localPost, post]);
 
   useEffect(() => {
     getPost(id);
-    // Scroll to top when component mounts
     window.scrollTo(0, 0);
   }, [id, getPost]);
 
-  // Update local post when post changes
   useEffect(() => {
     if (post && post._id === id) {
       setLocalPost(post);
     }
   }, [post, id]);
 
-  // Listen for post updates in context
   useEffect(() => {
     if (post && post._id === id && (!localPost || localPost._id !== id)) {
       setLocalPost(post);
@@ -57,7 +99,6 @@ const PostDetail = () => {
       if (isLiked) {
         result = await unlikePost(currentPost._id);
         if (result.success) {
-          // Update local state to reflect the change immediately
           setLocalPost((prev) => {
             if (!prev || prev._id !== currentPost._id) return prev;
             return {
@@ -69,7 +110,6 @@ const PostDetail = () => {
       } else {
         result = await likePost(currentPost._id);
         if (result.success) {
-          // Update local state to reflect the change immediately
           setLocalPost((prev) => {
             if (!prev || prev._id !== currentPost._id) return prev;
             return {
@@ -97,18 +137,17 @@ const PostDetail = () => {
     }
   };
 
-  // Function to get category color based on category name
   const getCategoryColor = (category) => {
-    const colors = {
-      Technology: "bg-blue-100 text-blue-800",
-      Culture: "bg-purple-100 text-purple-800",
-      Travel: "bg-green-100 text-green-800",
-      Food: "bg-red-100 text-red-800",
-      Politics: "bg-indigo-100 text-indigo-800",
-      Sports: "bg-yellow-100 text-yellow-800",
-      default: "bg-gray-100 text-gray-800",
-    };
-    return colors[category] || colors.default;
+    return CATEGORY_COLORS[category] || CATEGORY_COLORS.default;
+  };
+
+  const getInitials = (name) => {
+    if (!name) return "?";
+    return name
+      .split(" ")
+      .map((part) => part.charAt(0).toUpperCase())
+      .join("")
+      .substring(0, 2);
   };
 
   if (loading || !getPostData()) {
@@ -116,18 +155,26 @@ const PostDetail = () => {
   }
 
   const currentPost = getPostData();
+  const categoryColors = getCategoryColor(currentPost.category);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-indigo-100/40 rounded-full blur-[150px]"></div>
+        <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-purple-100/40 rounded-full blur-[150px]"></div>
+        <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-pink-100/30 rounded-full blur-[120px]"></div>
+      </div>
+
+      <div className="relative container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Back Button */}
           <button
             onClick={() => navigate(-1)}
-            className="mb-6 flex items-center text-gray-600 hover:text-blue-600 transition-colors duration-200"
+            className="group mb-8 inline-flex items-center gap-2 px-4 py-2 bg-white rounded-xl border border-slate-200 text-slate-600 hover:text-indigo-600 hover:border-indigo-200 hover:bg-indigo-50 shadow-sm transition-all duration-200"
           >
             <svg
-              className="w-5 h-5 mr-2"
+              className="w-5 h-5 transition-transform duration-200 group-hover:-translate-x-1"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -142,251 +189,296 @@ const PostDetail = () => {
             Back to Posts
           </button>
 
-          {/* Post Card */}
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-            {/* Post Header */}
-            <div className="p-6 md:p-8">
-              <div className="flex items-center justify-between mb-4">
-                <span
-                  className={`text-xs font-semibold px-3 py-1 rounded-full ${getCategoryColor(
-                    currentPost.category
-                  )}`}
-                >
-                  {currentPost.category}
-                </span>
-                <span className="text-gray-500 text-sm">
-                  {formatDistanceToNow(new Date(currentPost.createdAt), {
-                    addSuffix: true,
-                  })}
-                </span>
+          {/* Main Post Card */}
+          <article className="relative group">
+            {/* Card Glow */}
+            <div className="absolute -inset-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-[2rem] opacity-5 blur-xl"></div>
+
+            {/* Card */}
+            <div className="relative bg-white rounded-3xl border border-slate-200 shadow-xl shadow-slate-200/50 overflow-hidden">
+              {/* Post Header */}
+              <div className="p-6 md:p-10">
+                {/* Category & Date Row */}
+                <div className="flex items-center justify-between mb-6">
+                  <span
+                    className={`inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-xl border ${categoryColors.bg} ${categoryColors.text} ${categoryColors.border}`}
+                  >
+                    <span
+                      className={`w-2 h-2 rounded-full ${categoryColors.dot}`}
+                    ></span>
+                    {currentPost.category}
+                  </span>
+                  <div className="flex items-center gap-2 text-slate-400 text-sm">
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    {formatDistanceToNow(new Date(currentPost.createdAt), {
+                      addSuffix: true,
+                    })}
+                  </div>
+                </div>
+
+                {/* Title */}
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight mb-8">
+                  {currentPost.title}
+                </h1>
+
+                {/* Author Section */}
+                <div className="flex items-center justify-between mb-8 pb-8 border-b border-slate-100">
+                  <div className="flex items-center gap-4">
+                    {/* Author Avatar */}
+                    <div className="relative">
+                      <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full opacity-50 blur-sm"></div>
+                      {currentPost.author?.avatar ? (
+                        <img
+                          src={currentPost.author.avatar}
+                          alt={currentPost.author.name}
+                          className="relative w-14 h-14 rounded-full object-cover border-2 border-white shadow-md"
+                          onError={(e) => {
+                            e.target.style.display = "none";
+                            e.target.nextElementSibling.style.display = "flex";
+                          }}
+                        />
+                      ) : null}
+                      <div
+                        className="relative w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center border-2 border-white shadow-md"
+                        style={{
+                          display: currentPost.author?.avatar ? "none" : "flex",
+                        }}
+                      >
+                        <span className="text-white font-semibold text-lg">
+                          {getInitials(currentPost.author?.name)}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-lg text-slate-900">
+                        {currentPost.author?.name || "Unknown Author"}
+                      </p>
+                      <div className="flex items-center gap-2 text-sm text-slate-500">
+                        <span className="px-2 py-0.5 bg-slate-100 rounded-md text-slate-600 text-xs font-medium">
+                          {currentPost.author?.role || "Writer"}
+                        </span>
+                        <span>•</span>
+                        <span>
+                          {Math.ceil(currentPost.content?.length / 1000) || 5}{" "}
+                          min read
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Edit/Delete Actions */}
+                  {isAuthenticated &&
+                    (currentPost.author?._id === user._id ||
+                      user.role === "admin") && (
+                      <div className="flex items-center gap-2">
+                        <Link
+                          to={`/edit-post/${currentPost._id}`}
+                          className="p-3 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all duration-200"
+                          title="Edit Post"
+                        >
+                          <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                            />
+                          </svg>
+                        </Link>
+                        <button
+                          onClick={() => handleDeletePost(currentPost._id)}
+                          className="p-3 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all duration-200"
+                          title="Delete Post"
+                        >
+                          <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    )}
+                </div>
+
+                {/* Tags */}
+                {currentPost.tags && currentPost.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    {currentPost.tags.map((tag, index) => {
+                      const tagColors = [
+                        "bg-indigo-50 text-indigo-600 border-indigo-100 hover:bg-indigo-100",
+                        "bg-purple-50 text-purple-600 border-purple-100 hover:bg-purple-100",
+                        "bg-pink-50 text-pink-600 border-pink-100 hover:bg-pink-100",
+                        "bg-emerald-50 text-emerald-600 border-emerald-100 hover:bg-emerald-100",
+                      ];
+                      return (
+                        <span
+                          key={index}
+                          className={`text-sm font-medium px-3 py-1.5 rounded-lg border transition-colors duration-200 cursor-pointer ${
+                            tagColors[index % tagColors.length]
+                          }`}
+                        >
+                          #{tag}
+                        </span>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
 
-              <h1 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800 leading-tight">
-                {currentPost.title}
-              </h1>
-
-              {/* Author Section */}
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center">
-                  {/* Author Avatar - Fixed to handle missing avatar */}
-                  {currentPost.author?.avatar ? (
+              {/* Post Image */}
+              {currentPost.image && currentPost.image !== "no-photo.jpg" && (
+                <div className="px-6 md:px-10 pb-8">
+                  <div className="relative rounded-2xl overflow-hidden border border-slate-100">
                     <img
-                      src={currentPost.author.avatar}
-                      alt={currentPost.author.name}
-                      className="w-12 h-12 rounded-full object-cover mr-4 border-2 border-gray-200"
+                      src={`${process.env.REACT_APP_API_URL}/uploads/${currentPost.image}`}
+                      alt={currentPost.title}
+                      className="w-full h-auto object-cover"
                       onError={(e) => {
-                        // Hide broken image and show fallback
-                        e.target.style.display = "none";
-                        e.target.nextElementSibling.style.display = "flex";
+                        e.target.parentElement.innerHTML = `
+                          <div class="w-full h-64 bg-slate-100 flex flex-col items-center justify-center">
+                            <svg class="w-16 h-16 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <p class="mt-2 text-slate-400 text-sm">Image not available</p>
+                          </div>
+                        `;
                       }}
                     />
-                  ) : null}
-                  {/* Fallback avatar when no image or image fails to load */}
-                  <div
-                    className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center mr-4 border-2 border-gray-200"
-                    style={{
-                      display: currentPost.author?.avatar ? "none" : "flex",
-                    }}
-                  >
-                    <span className="text-white font-semibold">
-                      {currentPost.author?.name?.charAt(0).toUpperCase() ?? "?"}
-                    </span>
                   </div>
-                  <div>
-                    <p className="font-medium text-gray-800">
-                      {currentPost.author?.name || "Unknown Author"}
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      {currentPost.author?.role || "Writer"} •{" "}
-                      {Math.ceil(currentPost.content?.length / 1000) || 5} min
-                      read
-                    </p>
-                  </div>
-                </div>
-
-                {isAuthenticated &&
-                  (currentPost.author?._id === user._id ||
-                    user.role === "admin") && (
-                    <div className="flex items-center space-x-2">
-                      <Link
-                        to={`/edit-post/${currentPost._id}`}
-                        className="p-2 text-blue-600 hover:bg-blue-50 rounded-full transition-colors duration-200"
-                        title="Edit Post"
-                      >
-                        <svg
-                          className="w-5 h-5"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                          />
-                        </svg>
-                      </Link>
-                      <button
-                        onClick={() => handleDeletePost(currentPost._id)}
-                        className="p-2 text-red-600 hover:bg-red-50 rounded-full transition-colors duration-200"
-                        title="Delete Post"
-                      >
-                        <svg
-                          className="w-5 h-5"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  )}
-              </div>
-
-              {/* Tags */}
-              {currentPost.tags && currentPost.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {currentPost.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="bg-gray-100 text-gray-700 text-xs font-medium px-3 py-1 rounded-full hover:bg-gray-200 transition-colors duration-200"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
                 </div>
               )}
-            </div>
 
-            {/* Post Image */}
-            {currentPost.image && currentPost.image !== "no-photo.jpg" && (
-              <div className="px-6 md:px-8 pb-6">
-                <div className="rounded-xl overflow-hidden">
-                  <img
-                    src={`${process.env.REACT_APP_API_URL}/uploads/${currentPost.image}`}
-                    alt={currentPost.title}
-                    className="w-full h-auto object-cover"
-                    onError={(e) => {
-                      // Hide broken image and show fallback
-                      e.target.style.display = "none";
-                      e.target.parentElement.innerHTML = `
-                        <div class="w-full h-64 bg-gray-200 flex items-center justify-center">
-                          <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0l4.414 4.586a2 2 0 012.828 0L19.414 11.414a2 2 0 002.828 0L16.586 6.586a2 2 0 00-2.828 0L9.172 11.414a2 2 0 01-2.828 0z" />
-                          </svg>
-                          <p class="mt-2 text-gray-500">Image not available</p>
-                        </div>
-                      `;
+              {/* Post Content */}
+              <div className="px-6 md:px-10 pb-8">
+                <div className="prose prose-lg prose-slate max-w-none">
+                  <div
+                    className="text-slate-700 leading-relaxed"
+                    dangerouslySetInnerHTML={{
+                      __html: currentPost.content.replace(/\n/g, "<br />"),
                     }}
                   />
                 </div>
               </div>
-            )}
 
-            {/* Post Content */}
-            <div className="px-6 md:px-8 pb-6">
-              <div className="prose prose prose-lg max-w-none text-gray-700">
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: currentPost.content.replace(/\n/g, "<br />"),
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Post Actions */}
-            <div className="px-6 md:px-8 py-4 border-t border-gray-100">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-6">
-                  <button
-                    onClick={handleLike}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-200 ${
-                      isLiked
-                        ? "text-red-500 bg-red-50 hover:bg-red-100"
-                        : "text-gray-600 hover:text-red-500 hover:bg-red-50"
-                    }`}
-                    disabled={!isAuthenticated}
-                  >
-                    <svg
-                      className="w-5 h-5"
-                      fill={isLiked ? "currentColor" : "none"}
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+              {/* Post Actions */}
+              <div className="px-6 md:px-10 py-6 border-t border-slate-100 bg-slate-50/50">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    {/* Like Button */}
+                    <button
+                      onClick={handleLike}
+                      disabled={!isAuthenticated}
+                      className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium transition-all duration-200 ${
+                        isLiked
+                          ? "text-rose-600 bg-rose-50 border border-rose-200"
+                          : "text-slate-600 bg-white border border-slate-200 hover:text-rose-600 hover:bg-rose-50 hover:border-rose-200"
+                      } ${
+                        !isAuthenticated ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                      />
-                    </svg>
-                    <span>
-                      {currentPost.likes.length}{" "}
-                      {currentPost.likes.length === 1 ? "Like" : "Likes"}
-                    </span>
-                  </button>
+                      <svg
+                        className="w-5 h-5"
+                        fill={isLiked ? "currentColor" : "none"}
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                        />
+                      </svg>
+                      <span>
+                        {currentPost.likes.length}{" "}
+                        {currentPost.likes.length === 1 ? "Like" : "Likes"}
+                      </span>
+                    </button>
 
-                  <div className="flex items-center space-x-2 text-gray-600 px-4 py-2">
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                    {/* Comments Count */}
+                    <a
+                      href="#comments"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium text-slate-600 bg-white border border-slate-200 hover:text-indigo-600 hover:bg-indigo-50 hover:border-indigo-200 transition-all duration-200"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                      />
-                    </svg>
-                    <span>
-                      {currentPost.comments.length}{" "}
-                      {currentPost.comments.length === 1
-                        ? "Comment"
-                        : "Comments"}
-                    </span>
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                        />
+                      </svg>
+                      <span>
+                        {currentPost.comments.length}{" "}
+                        {currentPost.comments.length === 1
+                          ? "Comment"
+                          : "Comments"}
+                      </span>
+                    </a>
                   </div>
-
-                  <button className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-full transition-all duration-200">
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m9.032 4.026a9.001 9.001 0 01-7.432 0m9.032-4.026A9.001 9.001 0 0112 3c-4.474 0-8.268 3.12-9.032 7.326m0 0A9.001 9.001 0 0012 21c4.474 0 8.268-3.12 9.032-7.326"
-                      />
-                    </svg>
-                    <span>Share</span>
-                  </button>
                 </div>
               </div>
+
+              {/* Bottom Gradient Line */}
+              <div className="h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+            </div>
+          </article>
+
+          {/* Comments Section */}
+          <div className="relative mt-10 group">
+            {/* Card Glow */}
+            <div className="absolute -inset-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-[2rem] opacity-5 blur-xl"></div>
+
+            {/* Card */}
+            <div className="relative bg-white rounded-3xl border border-slate-200 shadow-xl shadow-slate-200/50 overflow-hidden">
+              <div className="p-6 md:p-10">
+                <CommentSection
+                  postId={currentPost._id}
+                  comments={currentPost.comments}
+                />
+              </div>
+
+              {/* Bottom Gradient Line */}
+              <div className="h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
             </div>
           </div>
 
-          {/* Comments Section */}
-          <div className="mt-8 bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div className="p-6 md:p-8">
-              <h2 className="text-2xl font-bold mb-6 text-gray-800">
-                Comments ({currentPost.comments.length})
-              </h2>
-              <CommentSection
-                postId={currentPost._id}
-                comments={currentPost.comments}
-              />
-            </div>
+          {/* Bottom Decoration */}
+          <div className="flex items-center justify-center gap-3 mt-12">
+            <div className="w-2 h-2 rounded-full bg-indigo-300"></div>
+            <div className="w-2 h-2 rounded-full bg-purple-400"></div>
+            <div className="w-2 h-2 rounded-full bg-pink-300"></div>
           </div>
         </div>
       </div>
